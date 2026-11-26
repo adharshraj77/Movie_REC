@@ -1,0 +1,194 @@
+@import "tailwindcss";
+
+/* ── Custom Theme Tokens ───────────────────────────────────── */
+:root {
+  --cinema-red: #e50914;
+  --cinema-red-hover: #b80710;
+  --cinema-purple: #8b5cf6;
+  --cinema-dark: #0a0a0f;
+  --cinema-surface: rgba(18, 18, 28, 0.7);
+  --cinema-border: rgba(255, 255, 255, 0.08);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    color-scheme: dark;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--cinema-dark);
+    color: #f3f4f6;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+}
+
+/* Ambient glow background */
+@keyframes auroraDrift {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translate3d(2%, -2%, 0) scale(1.06);
+    opacity: 1;
+  }
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: -10%;
+  background:
+    radial-gradient(circle 800px at 15% 15%, rgba(229, 9, 20, 0.14) 0%, transparent 70%),
+    radial-gradient(circle 900px at 85% 80%, rgba(139, 92, 246, 0.13) 0%, transparent 70%),
+    radial-gradient(circle 600px at 50% 45%, rgba(20, 20, 40, 0.55) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+  animation: auroraDrift 16s ease-in-out infinite;
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Custom Scrollbar ──────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(10, 10, 15, 0.8);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(229, 9, 20, 0.4);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(229, 9, 20, 0.8);
+}
+
+/* ── Glassmorphism Card ────────────────────────────────────── */
+.glass-panel {
+  background: var(--cinema-surface);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid var(--cinema-border);
+  border-radius: 1rem;
+}
+
+.glass-panel-glow {
+  background: rgba(22, 22, 34, 0.8);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(229, 9, 20, 0.2);
+  box-shadow: 0 10px 40px -10px rgba(229, 9, 20, 0.15), 0 0 20px rgba(139, 92, 246, 0.08);
+}
+
+/* ── 3D Card Hover ─────────────────────────────────────────── */
+.movie-card-container {
+  perspective: 1000px;
+}
+
+.movie-card-inner {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+  transform-style: preserve-3d;
+}
+
+.movie-card-container:hover .movie-card-inner {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 20px 35px -8px rgba(229, 9, 20, 0.35), 0 0 25px -4px rgba(139, 92, 246, 0.25);
+  border-color: rgba(229, 9, 20, 0.6);
+}
+
+/* ── Horizontal Scroll Row ─────────────────────────────────── */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ── Gradient Text ─────────────────────────────────────────── */
+.gradient-title {
+  background: linear-gradient(135deg, #ffffff 20%, #ff4b55 70%, #c084fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.netflix-gradient-text {
+  background: linear-gradient(135deg, #e50914 0%, #ff5252 60%, #a855f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Glowing Buttons ───────────────────────────────────────── */
+.btn-netflix {
+  background: linear-gradient(135deg, #e50914 0%, #b80710 100%);
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 9999px;
+  box-shadow: 0 4px 20px rgba(229, 9, 20, 0.4);
+  transition: all 0.25s ease;
+}
+.btn-netflix:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 28px rgba(229, 9, 20, 0.6);
+  background: linear-gradient(135deg, #ff1e27 0%, #e50914 100%);
+}
+
+.btn-secondary-glass {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 9999px;
+  transition: all 0.25s ease;
+}
+.btn-secondary-glass:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+/* ── Shimmer Loading ───────────────────────────────────────── */
+@keyframes shimmerPulse {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.shimmer-card {
+  background: linear-gradient(90deg, rgba(25, 25, 35, 0.8) 0%, rgba(45, 45, 60, 0.8) 50%, rgba(25, 25, 35, 0.8) 100%);
+  background-size: 200% 100%;
+  animation: shimmerPulse 1.8s infinite linear;
+}
+
+/* ── Floating Cinematic Particles ──────────────────────────── */
+@keyframes floatUp {
+  0% { transform: translateY(105vh) scale(0.5); opacity: 0; }
+  15% { opacity: 0.22; }
+  85% { opacity: 0.22; }
+  100% { transform: translateY(-10vh) scale(1.1); opacity: 0; }
+}
+
+.floating-particle {
+  position: fixed;
+  border-radius: 9999px;
+  pointer-events: none;
+  opacity: 0;
+  filter: blur(1px);
+  animation: floatUp linear infinite;
+}
+
+/* Dark dropdown options for Windows browsers */
+select option {
+  background-color: #14141f;
+  color: #f3f4f6;
+}
